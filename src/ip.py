@@ -5,8 +5,6 @@ import ipaddress
 
 #This is function for check a conditions
 
-#This is function for check a conditions
-
 def valid_ip(ip):
     try:
         ipaddress.ip_address(ip)
@@ -30,11 +28,9 @@ def check_ip(ip):
         return False
     
     
-<<<<<<< HEAD
-#This is function for interaction with database
-=======
 
->>>>>>> 50e3266a8740878af06ed210c26764ba7855ed30
+#This is function for interaction with database
+
 
 def show_ip(ip):
     valid_ip(ip)

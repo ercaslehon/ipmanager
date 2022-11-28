@@ -5,8 +5,7 @@ import ipaddress
 
 #This is function for check a conditions
 
-#This is function for check a conditions
-
+#ip validation function
 def valid_ip(ip):
     try:
         ipaddress.ip_address(ip)
@@ -14,6 +13,7 @@ def valid_ip(ip):
     except:
         return False
 
+#Function to check if there is no IP in the table. True when doesnt exist, False when exist.
 def check_ip(ip):
     valid_ip(ip)
     if valid_ip(ip) is True:
@@ -30,11 +30,8 @@ def check_ip(ip):
         return False
     
     
-<<<<<<< HEAD
 #This is function for interaction with database
-=======
 
->>>>>>> 50e3266a8740878af06ed210c26764ba7855ed30
 
 def show_ip(ip):
     valid_ip(ip)
@@ -45,9 +42,18 @@ def show_ip(ip):
         cursor = conn.cursor()
         cursor.execute(query)
         result = cursor.fetchall()
-        return result
+        status = 200
+        return [result, status]
+    elif valid_ip(ip) is True and check_ip(ip) is True:
+        result = {"message": "ip-addres valid, but doesnt exist"}
+        status = 404
+        return [result, status]
     else:
-        return {"message": "ip-addres is invalid or doesnt exist"}
+        result = {"message": "ip-adres are invalid"}
+        status = 400
+        return [result, status]
+    
+
 
 def add_ip(ip, used, comment):
     valid_ip(ip)
@@ -59,9 +65,16 @@ def add_ip(ip, used, comment):
         cursor.execute(query)
         conn.commit()
         result = cursor.fetchall()
-        return result
+        status = 200
+        return [result, status]
+    elif valid_ip(ip) is True and check_ip(ip) is False:
+        result = {"message": "ip-adres already exist", "check it": show_ip(ip)}
+        status = 412
+        return [result, status]
     else:
-        return {"message": "ip-addres is invalid or already exist"}
+        result = {"message": "ip-addres is invalid"}
+        status = 400
+        return [result, status]
 
 def del_ip(ip):
     valid_ip(ip)
@@ -73,9 +86,16 @@ def del_ip(ip):
         cursor.execute(query)
         conn.commit()
         result = cursor.fetchall()
-        return result
+        status = 200
+        return [result, status]
+    elif valid_ip(ip) is True and check_ip(ip) is True:
+        result = {"message": "This ip-adress already deleted"}
+        status = 412
+        return [result, status]
     else:
-        return {"message": "ip-addres is invalid or already deleted"}
+        result = {"message": "ip-addres is invalid"}
+        status = 400
+        return [result, status]
 
 def upd_ip(ip, used, comment):
     valid_ip(ip)
@@ -87,10 +107,16 @@ def upd_ip(ip, used, comment):
         cursor.execute(query)
         conn.commit()
         result = cursor.fetchall()
-        return result
+        status = 200
+        return [result, status]
+    elif valid_ip(ip) is True and check_ip(ip) is True:
+        result = {"message": "ip-addres valid, but doesnt exist."}
+        status = 404
+        return [result, status]
     else:
-        return {"message": "ip-addres is invalid or doesnt exist"}
-
+        result = {"message": "ip-addres is invalid"}
+        status = 400
+        return [result, status]
 
 def search_ip():
     query = "SELECT * FROM ipaddresses"

@@ -1,8 +1,6 @@
 #!/opt/ipmanager/venv/bin/python3
-from getpass import getpass
 from mysql.connector import connect, Error
 from fastapi import FastAPI
-import json
 from fastapi.responses import JSONResponse
 from ip import show_ip, search_ip, add_ip, del_ip, upd_ip
 from net import show_net, search_net, add_net, del_net, upd_net
@@ -20,19 +18,20 @@ async def root():
 
 @app.get("/ip/upd")
 async def ip_upd(ip, used, comment):
-    return JSONResponse(upd_ip(ip, used, comment))
+    return JSONResponse(upd_ip(ip, used, comment)[0], status_code=show_ip(ip)[1])
 
 @app.get("/ip/del")
 async def ip_del(ip):
-    return JSONResponse(del_ip(ip))
+    return JSONResponse(del_ip(ip)[0], status_code=show_ip(ip)[1])
 
 @app.get("/ip/add")
 async def ip_add(ip, used, comment):
-    return JSONResponse(add_ip(ip, used, comment))
+    return JSONResponse(add_ip(ip, used, comment)[0], status_code=show_ip(ip)[1])
 
 @app.get("/ip/show")
 async def ip_show(ip):
-    return JSONResponse(show_ip(ip))
+    return JSONResponse(show_ip(ip)[0], status_code=show_ip(ip)[1])
+
 
 @app.get("/ip/search")
 async def ip_search():
@@ -46,19 +45,19 @@ async def ip_search():
 
 @app.get("/net/upd")
 async def net_upd(net, active, comment):
-    return JSONResponse(upd_net(net, active, comment))
+    return JSONResponse(upd_net(net, active, comment)[0], status_code=show_ip(ip)[1])
 
 @app.get("/net/del")
 async def net_del(net):
-    return JSONResponse(del_net(net))
+    return JSONResponse(del_net(net)[0], status_code=show_ip(ip)[1])
 
 @app.get("/net/add")
 async def net_add(net, active, comment):
-    return JSONResponse(add_net(net, active, comment))
+    return JSONResponse(add_net(net, active, comment)[0], status_code=show_ip(ip)[1])
 
 @app.get("/net/show")
 async def net_show(net):
-    return JSONResponse(show_net(net))
+    return JSONResponse(show_net(net)[0], status_code=show_ip(ip)[1])
 
 @app.get("/net/search")
 async def net_search():

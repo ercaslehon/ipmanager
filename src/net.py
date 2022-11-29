@@ -64,21 +64,21 @@ def add_net(net, active, comment):
             cursor = conn.cursor()
             cursor.execute(query)
             conn.commit()
-            result1 = cursor.fetchall()
-            result = show_net(net)[0]
-            status = 200
+            internal_result = cursor.fetchall()
+            message = {"network added, check it": show_net(net)[0]}
+            result = {'message': message, 'status': 200}
             log.info(f'Added new network -> {net}')
-            return [result, status]
+            return result
         else:
-            result = {"message": "network already exist", "check it": show_net(net)[0]}
-            status = 412
+            message = {"network already exist, check it": show_net(net)[0]}
+            result = {'message': message, 'status': 412}
             log.warn(f'Cant add new network -> {net}: Cause network already exist')
-            return [result, status]
+            return result
     else:
-        result = {"message": "network is invalid"}
-        status = 400
+        message = {"message": "network is invalid"}
+        result = {'message': message, 'status': 400}
         log.warn(f'Cant add new network -> {net}: Cause network is invalid')
-        return [result, status]
+        return result
 
 def del_net(net):
     if valid_net(net) is True: 
@@ -88,21 +88,21 @@ def del_net(net):
             cursor = conn.cursor()
             cursor.execute(query)
             conn.commit()
-            result1 = cursor.fetchall()
-            result = {"nessage": "network deleted"}
-            status = 200
+            internal_result = cursor.fetchall()
+            message = {"message": "network deleted"}
+            result = {'message': message, 'status': 200}
             log.info(f'Deleted old network -> {net}')
-            return [result, status]
+            return result
         else:
-            result = {"message": "This network already deleted"}
-            status = 412
+            message = {"message": "This network already deleted"}
+            result = {'message': message, 'status': 412}
             log.warn(f'Cant delete old network -> {net}: Cause network already deleted')
-            return [result, status]
+            return result
     else:
-        result = {"message": "network is invalid"}
-        status = 400
+        message = {"message": "network is invalid"}
+        result = {'message': message, 'status': 400}
         log.warn(f'Cant delete this network -> {net}: Cause network is invalid')
-        return [result, status]
+        return result
 
 def upd_net(net, active, comment):
     if valid_net(net) is True:
@@ -113,21 +113,22 @@ def upd_net(net, active, comment):
             cursor = conn.cursor()
             cursor.execute(query)
             conn.commit()
-            result1 = cursor.fetchall()
-            result = show_net(net)[0]
-            status = 200
+            internal = cursor.fetchall()
+            new_version = show_net(net)[0]
+            message = {"ip address has been updated, check it": show_net(net)[0]}
+            result = {'message': message, 'status': 200}
             log.info(f'{old_version} modify to {result}')
-            return [result, status]
+            return result
         else:
-             result = {"message": "network valid, but doesnt exist."}
-             status = 404
+             message = {"message": "network valid, but doesnt exist."}
+             result = {'message': message, 'status': 404}
              log.warn(f'Cant modify this network -> {net}: Cause network doesnt exist.')
-             return [result, status]
+             return result
     else:
-        result = {"message": "network is invalid"}
-        status = 400
+        message = {"message": "network is invalid"}
+        result = {'message': message, 'status': 400}
         log.warn(f'Cant modify this network -> {net}: Cause network is invalid')
-        return [result, status]
+        return result
 
 def search_net():
     query = "SELECT * FROM networks" 

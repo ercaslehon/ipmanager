@@ -65,20 +65,21 @@ def add_ip(ip, used, comment):
             cursor = conn.cursor()
             cursor.execute(query)
             conn.commit()
-            result = cursor.fetchall()
-            status = 200
+            internal_result = cursor.fetchall()
+            message = {"ip-addres added, check it": show_ip(ip)[0]}
+            result = {'message': message, 'status': 200}
             log.info(f'Added new IP -> {ip}')
-            return [result, status]
+            return result
         else:
-            result = {"message": "ip-addres already exist", "check it": show_ip(ip)[0]}
-            status = 412
+            message = {"ip-addres already exist, check it": show_ip(ip)[0]}
             log.warn(f'Cant add new IP -> {ip}: Cause IP already exist')
-            return [result, status]
+            result = {'message': message, 'status': 412}
+            return result
     else:
-        result = {"message": "ip-addres is invalid"}
-        status = 400
+        message = {"message": "ip-addres is invalid"}
         log.warn(f'Cant add new IP -> {ip}: Cause IP is invalid')
-        return [result, status]
+        result = {'message': message, 'status': 400}
+        return result
 
 def del_ip(ip):
     if valid_ip(ip) is True:
@@ -88,20 +89,21 @@ def del_ip(ip):
             cursor = conn.cursor()
             cursor.execute(query)
             conn.commit()
-            result = cursor.fetchall()
-            status = 200
+            internal_result = cursor.fetchall()
+            message = {"message": "ip-addres deleted"}
+            result = {'message': message, 'status': 200}
             log.info(f'Deleted old IP -> {ip}')
-            return [result, status]
+            return result
         else:
-            result = {"message": "This ip-adress already deleted"}
-            status = 412
+            message = {"message": "This ip-adress already deleted"}
             log.warn(f'Cant delete old IP -> {ip}: Cause IP already deleted')
-            return [result, status]
+            result = {'message': message, 'status': 412}
+            return result
     else:
-        result = {"message": "ip-addres is invalid"}
-        status = 400
+        message = {"message": "ip-addres is invalid"}
+        result = {'message': message, 'status': 400}
         log.warn(f'Cant delete this IP -> {ip}: Cause IP is invalid')
-        return [result, status]
+        return result
 
 def upd_ip(ip, used, comment):
     if valid_ip(ip) is True:
@@ -112,21 +114,22 @@ def upd_ip(ip, used, comment):
             cursor = conn.cursor()
             cursor.execute(query)
             conn.commit()
-            result1 = cursor.fetchall()
-            status = 200
-            result = show_ip(ip)[0]
-            log.info(f'{old_version} modify to {result}')
-            return [result, status]
+            internal_result = cursor.fetchall()
+            new_version = show_ip(ip)[0]
+            message = {"ip address has been updated, check it": show_ip(ip)[0]}
+            result = {'message': message, 'status': 200}
+            log.info(f'{old_version} modify to {new_version}')
+            return result
         else:
-            result = {"message": "ip-addres valid, but doesnt exist. Try add ip."}
-            status = 404
+            message = {"message": "ip-addres valid, but doesnt exist. Try add ip."}
+            result = {'message': message, 'status': 404}
             log.warn(f'Cant modify this IP -> {ip}: Cause IP doesnt exist.')
-            return [result, status]
+            return result
     else:
-        result = {"message": "ip-addres is invalid"}
-        status = 400
+        message  = {"message": "ip-addres is invalid"}
+        result = {'message': message, 'status': 400}
         log.warn(f'Cant modify this IP -> {ip}: Cause IP is invalid')
-        return [result, status]
+        return result
 
 def search_ip():
     query = "SELECT * FROM ipaddresses"

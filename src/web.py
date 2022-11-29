@@ -18,15 +18,15 @@ async def root():
 
 @app.get("/ip/upd")
 async def ip_upd(ip, used, comment):
-    return JSONResponse(upd_ip(ip, used, comment)[0], status_code=show_ip(ip)[1])
+    return JSONResponse(upd_ip(ip, used, comment)[0], status_code=upd_ip(ip, used, comment)[1])
 
 @app.get("/ip/del")
 async def ip_del(ip):
-    return JSONResponse(del_ip(ip)[0], status_code=show_ip(ip)[1])
+    return JSONResponse(del_ip(ip)[0], status_code=del_ip(ip)[1])
 
 @app.get("/ip/add")
 async def ip_add(ip, used, comment):
-    return JSONResponse(add_ip(ip, used, comment)[0], status_code=show_ip(ip)[1])
+    return JSONResponse(add_ip(ip, used, comment)[0], status_code=add_ip(ip, used, comment)[1])
 
 @app.get("/ip/show")
 async def ip_show(ip):
@@ -45,19 +45,19 @@ async def ip_search():
 
 @app.get("/net/upd")
 async def net_upd(net, active, comment):
-    return JSONResponse(upd_net(net, active, comment)[0], status_code=show_ip(ip)[1])
+    return JSONResponse(upd_net(net, active, comment)[0], status_code=show_net(net, active, comment)[1])
 
 @app.get("/net/del")
 async def net_del(net):
-    return JSONResponse(del_net(net)[0], status_code=show_ip(ip)[1])
+    return JSONResponse(del_net(net)[0], status_code=del_net(net)[1])
 
 @app.get("/net/add")
 async def net_add(net, active, comment):
-    return JSONResponse(add_net(net, active, comment)[0], status_code=show_ip(ip)[1])
+    return JSONResponse(add_net(net, active, comment)[0], status_code=add_net(net, active, comment)[1])
 
 @app.get("/net/show")
 async def net_show(net):
-    return JSONResponse(show_net(net)[0], status_code=show_ip(ip)[1])
+    return JSONResponse(show_net(net)[0], status_code=show_net(net)[1])
 
 @app.get("/net/search")
 async def net_search():

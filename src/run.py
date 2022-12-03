@@ -1,15 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from database.connectToDatabase import connectToDatabase
 from tortoise.contrib.fastapi import HTTPNotFoundError, register_tortoise
 from fastapi.responses import JSONResponse
 from view import search_ip, show_ip, add_ip, del_ip, upd_ip, search_net, show_net, add_net, del_net, upd_net
 from app.models import IpAddresses, Networks
-from tortoise.contrib.pydantic import pydantic_model_creator
 
 
 #Functionality Part
 app = FastAPI()
-ip_pydantic = pydantic_model_creator(IpAddresses)
 
 @app.get("/")
 async def read_root():
@@ -25,19 +23,25 @@ async def ip_search():
 
 @app.get("/ip/show")
 async def ip_show(ip):
-    return await show_ip(ip)
+     result = await show_ip(ip)
+     raise HTTPException( status_code = result['status'], detail = result['message'])
+     
 
 @app.get("/ip/add")
 async def ip_add(ip, used, comment):
-    return await add_ip(ip, used, comment)
+    result = await add_ip(ip, used, comment)
+    raise HTTPException( status_code = result['status'], detail = result['message'])
+
 
 @app.get("/ip/del")
 async def ip_del(ip):
-    return await del_ip(ip)
+    result = await del_ip(ip)
+    raise HTTPException( status_code = result['status'], detail = result['message'])
 
 @app.get("/ip/upd")
 async def ip_upd(ip, used, comment):
-    return await upd_ip(ip, used, comment)
+    result = await upd_ip(ip, used, comment)
+    raise HTTPException( status_code = result['status'], detail = result['message'])
 
 
 #NETWORKS
@@ -48,19 +52,23 @@ async def net_search():
 
 @app.get("/net/show")
 async def net_show(net):
-    return await show_net(net)
+    result = await show_net(net)
+    raise HTTPException( status_code = result['status'], detail = result['message'])
 
 @app.get("/net/add")
 async def net_add(net, active, comment):
-    return await add_net(net, active, comment)
+    result = await add_net(net, active, comment)
+    raise HTTPException( status_code = result['status'], detail = result['message'])
 
 @app.get("/net/del")
 async def net_del(net):
-    return await del_net(net)
+    result = await del_net(net)
+    raise HTTPException( status_code = result['status'], detail = result['message'])
 
 @app.get("/net/upd")
 async def net_upd(net, active, comment):
-    return await upd_net(net, active, comment)
+    result = await upd_net(net, active, comment)
+    raise HTTPException( status_code = result['status'], detail = result['message'])
 
 
 #REGISTER CONNETCT

@@ -3,11 +3,11 @@ from database.connectToDatabase import connectToDatabase
 from tortoise.contrib.fastapi import HTTPNotFoundError, register_tortoise
 from fastapi.responses import JSONResponse
 from view import search_ip, show_ip, add_ip, del_ip, upd_ip, search_net, show_net, add_net, del_net, upd_net
-from app.models import IpAddresses, Networks
-
+#from app.models import IpAddresses, Networks
 
 #Functionality Part
 app = FastAPI()
+
 
 @app.get("/")
 async def read_root():
@@ -30,6 +30,7 @@ async def ip_show(ip):
 @app.get("/ip/add")
 async def ip_add(ip, used, comment):
     result = await add_ip(ip, used, comment)
+    print(result)
     raise HTTPException( status_code = result['status'], detail = result['message'])
 
 
@@ -53,6 +54,7 @@ async def net_search():
 @app.get("/net/show")
 async def net_show(net):
     result = await show_net(net)
+    print(result)
     raise HTTPException( status_code = result['status'], detail = result['message'])
 
 @app.get("/net/add")

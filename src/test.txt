@@ -1,0 +1,77 @@
+{'IP-Address': 'Already exist', 'check it': {'message': "[app.models.IpAddresses.leaf(id=7, ip='192.11.0.1', used=True, comment='test')]", 'status': 200}}
+INFO:     176.215.69.79:50008 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+{'IP-Address': 'Already exist', 'check it': {'message': [app.models.IpAddresses.leaf(id=7, ip='192.11.0.1', used=True, comment='test')], 'status': 200}}
+INFO:     176.215.69.79:50020 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+{'IP-Address': 'Already exist', 'Check it': 'With /ip/show?ip=192.11.0.1'}
+INFO:     176.215.69.79:50082 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+{'IP-Address': 'Already exist', 'Check it': 'With /ip/show?ip=192.11.0.1'}
+INFO:     176.215.69.79:50085 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+INFO:     176.215.69.79:50086 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+{'message': {'IP-Address': 'Already exist', 'Check it': 'With /ip/show?ip=192.11.0.1'}, 'status': 412}
+INFO:     176.215.69.79:50097 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 412 Precondition Failed
+INFO:     176.215.69.79:50131 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+INFO:     176.215.69.79:50157 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+INFO:     176.215.69.79:50166 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+{'message': {'IP-Address': 'Already exist', 'Check it': {'message': "[app.models.IpAddresses.leaf(id=7, ip='192.11.0.1', used=True, comment='test')]", 'status': 200}}, 'status': 412}
+INFO:     176.215.69.79:50182 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 412 Precondition Failed
+INFO:     176.215.69.79:50199 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+INFO:     176.215.69.79:50205 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+{'message': {'IP-Address': 'Already exist', 'Check it': '1'}, 'status': 412}
+INFO:     176.215.69.79:50252 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 412 Precondition Failed
+{'message': {'IP-Address': 'Already exist', 'Check it': '1'}, 'status': 412}
+INFO:     176.215.69.79:50252 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 412 Precondition Failed
+INFO:     176.215.69.79:50252 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     176.215.69.79:50278 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+INFO:     176.215.69.79:50293 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+{'message': {'IP-Address': 'Already exist', 'Check it': {'message': "[app.models.IpAddresses.leaf(id=7, ip='192.11.0.1', used=True, comment='test')]", 'status': 200}}, 'status': 412}
+INFO:     176.215.69.79:50346 - "GET /ip/add?ip=192.11.0.1&used=True&comment=test HTTP/1.1" 412 Precondition Failed
+{'message': '{\'IP-Address\': \'Has been added\', \'Check It\': {\'message\': "[app.models.IpAddresses.leaf(id=8, ip=\'192.11.1.1\', used=True, comment=\'test\')]", \'status\': 200}}', 'status': 200}
+INFO:     176.215.69.79:50357 - "GET /ip/add?ip=192.11.1.1&used=True&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50370 - "GET /ip/add?ip=192.11.1.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+INFO:     176.215.69.79:50374 - "GET /ip/add?ip=192.11.1.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+INFO:     176.215.69.79:50384 - "GET /ip/add?ip=192.11.1.1&used=True&comment=test HTTP/1.1" 500 Internal Server Error
+{'message': {'IP-Address': 'Already exist', 'Check it': 'With /ip/show?ip=192.11.1.1'}, 'status': 412}
+INFO:     176.215.69.79:50405 - "GET /ip/add?ip=192.11.1.1&used=True&comment=test HTTP/1.1" 412 Precondition Failed
+INFO:     176.215.69.79:50418 - "GET /ip/upd?ip=192.11.1.1&used=False&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50454 - "GET /ip/upd?ip=192.11.1.1&used=False&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50468 - "GET /ip/show?ip=192.11.1.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50473 - "GET /ip/upd?ip=192.11.1.1&used=False&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50473 - "GET /ip/show?ip=192.11.1.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50473 - "GET /ip/show?ip=192.11.1.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50473 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     176.215.69.79:50485 - "GET /ip/upd?ip=192.11.0.1&used=False&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50514 - "GET /ip/upd?ip=192.11.0.1&used=False&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50529 - "GET /ip//ip/show?ip=192.11.0.1%22 HTTP/1.1" 404 Not Found
+INFO:     176.215.69.79:50529 - "GET /ip//ip/show?ip=192.11.0.1 HTTP/1.1" 404 Not Found
+INFO:     176.215.69.79:50544 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50544 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50569 - "GET /ip/upd?ip=192.11.0.1&used=0&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50569 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50574 - "GET /ip/upd?ip=192.11.0.1&used=1&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50574 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50574 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50574 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50632 - "GET /ip/del?ip=192.11.0.1&used=1&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50632 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 404 Not Found
+{'message': "{'IP-Address': 'Has been added', 'Check It': 'With /ip/show?ip=192.11.0.1'}", 'status': 200}
+INFO:     176.215.69.79:50639 - "GET /ip/add?ip=192.11.0.1&used=1&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50639 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50644 - "GET /ip/upd?ip=192.11.0.1&used=1&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50644 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50644 - "GET /ip/upd?ip=192.11.0.1&used=0&comment=test HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50644 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50644 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50644 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     176.215.69.79:50653 - "GET /ip/upd?ip=192.11.0.1&used=0&comment=test222 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50653 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50688 - "GET /ip/upd?ip=192.11.0.1&used=0&comment=test222 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50688 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50688 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50705 - "GET /ip/show?ip=192.11.0.1 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50705 - "GET /ip/upd?ip=192.11.0.1&used=0&comment=test222 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50705 - "GET /ip/upd?ip=192.11.0.1&used=1&comment=test222 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50734 - "GET /ip/upd?ip=192.11.0.1&used=1&comment=test222 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50734 - "GET /ip/upd?ip=192.11.0.1&used=0&comment=test222 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50754 - "GET /ip/upd?ip=192.11.0.1&used=0&comment=test222 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50761 - "GET /ip/upd?ip=192.11.0.1&used=1&comment=test222 HTTP/1.1" 200 OK
+INFO:     176.215.69.79:50766 - "GET /ip/upd?ip=192.11.0.1&used=False&comment=test222 HTTP/1.1" 200 OK

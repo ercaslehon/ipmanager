@@ -9,6 +9,7 @@ from logbook import Logger, StreamHandler, FileHandler
 
 ip_pydantic = pydantic_model_creator(IpAddresses)
 net_pydantic = pydantic_model_creator(Networks)
+
 FileHandler('./logs/ipmanager.log').push_application()
 log = Logger('ipmanager')
 
@@ -39,14 +40,14 @@ async def show_ip(ip):
     if valid_ip(ip) is True:
         if await check_ip(ip) is True:
             message  = await ip_pydantic.from_queryset(IpAddresses.filter(ip = ip ))
-            result = {"message" : message, "status" : 200}
+            result = {"message" : str(message), "status" : 200}
             return result
         else:
-            message = {"message" : "ip-address is valid, but doesnt exist"}
+            message = {"IP-Address" : "Is valid, but doesnt exist"}
             result = {"message" : message, "status" : 404}
             return result
     else:
-        message = {"message" : "ip-address is invalid"}
+        message = {"IP-Address" : "Is invalid"}
         result = {"message" : message, "status" : 400}
         return result
 
@@ -55,18 +56,20 @@ async def add_ip(ip, used, comment):
     if valid_ip(ip) is True:
         if await check_ip(ip) is False:
             await IpAddresses.create(ip = ip, used = used, comment = comment)
-            message = {"IP":"has been added", "Check It" : await show_ip(ip)}
+            added_ip = await show_ip(ip)
+            message = {"IP-Address" : "Has been added", "Check It" : f"With /ip/show?ip={ip}"}
             log.info(f'Added new IP -> {ip}')
-            result = {'message' : message, 'status' : 200}
+            result = {'message' : str(message), 'status' : 200}
             return result
         else:
             log.warn(f'Cant add new IP -> {ip} : Cause IP already exist')
-            message = {"IP" : "already exist", "check it" : await show_ip(ip)}
+            existed_ip = await show_ip(ip)
+            message = {"IP-Address" : "Already exist", "Check it" : f"With /ip/show?ip={ip}"}
             result = {"message" : message, "status" : 412}
-            return message
+            return result
     else:
         log.warn(f'Cant add new IP -> {ip}: Cause IP is invalid')
-        message = {"message" : "ip-address is invalid"}
+        message = {"IP-Address" : "Is invalid"}
         result = {'message': message, 'status': 400}
         return result
 
@@ -76,17 +79,17 @@ async def del_ip(ip):
         if await check_ip(ip) is True:
             await IpAddresses.filter(ip = ip).delete()
             log.info(f'Deleted old IP -> {ip}')
-            message = {"message" : f"{ip} has been deleted"}
+            message = {"IP-address" : "Has been deleted"}
             result = {'message': message, 'status': 200}
             return result
         else:
             log.warn(f'Cant delete old IP -> {ip}: Cause IP already deleted')
-            message = {"message" : "This ip-adress already deleted"}
+            message = {"IP-Address" : "Is already deleted"}
             result = {'message': message, 'status': 404}
             return result
     else:
         log.warn(f'Cant delete this IP -> {ip}: Cause IP is invalid')
-        message = {"message" : "ip-addres is invalid"}
+        message = {"IP-Address" : "Is invalid"}
         result = {'message': message, 'status': 400}
         return result
 
@@ -94,20 +97,21 @@ async def upd_ip(ip, used, comment):
     if valid_ip(ip) is True:
         if await check_ip(ip) is True:
             old_version = await show_ip(ip)
-            await IpAddresses.filter(ip = ip).update(used = used, comment = comment)
+            print(used, comment)
+            await IpAddresses.filter(ip = ip).update(comment = comment, used = used)
             new_version = await show_ip(ip)
             log.info(f'{old_version} modify to {new_version}')
-            message = {"IP" : "Has been updated", "Check It" : new_version}
+            message = {"IP-Address" : "Has been updated", "Check It" : f"With /ip/show?ip={ip}"}
             result = {'message': message, 'status': 200}
             return result
         else:
             log.warn(f'Cant modify this IP -> {ip}: Cause IP doesnt exist.')
-            message = {"message" : "IP-address valid, but doesnt exist. Try add ip."}
+            message = {"IP-Address" : "Valid, but doesnt exist. Try add this IP."}
             result = {'message' : message, 'status': 404}
             return result
     else:
         log.warn(f'Cant modify this IP -> {ip}: Cause IP is invalid')    
-        message  = {"message" : "ip-address is invalid"}
+        message  = {"IP-Address" : "Is invalid"}
         result = {'message': message, 'status': 400}
         return result
 
@@ -124,16 +128,17 @@ async def search_net():
 async def show_net(net):
     if valid_net(net) is True:
         if await check_net(net) is True:
-            message = await net_pydantic.from_queryset(Networks.filter( network = net ))
-            result = {"message" : message, "status" : 200}
+            message = await net_pydantic.from_queryset(Networks.filter(network = net))
+            result = {"message" :str(message), "status" : 200}
             return result
         else:
-            message = {"message": "Network is valid, but doesnt exist"}
-            result = {"message" : message, "statis" : 400}
+            message = {"Network": "Is valid, but doesnt exist"}
+            result = {"message" : message, "status" : 400}
             return result
     else:
-        message = {"message" : "Network is invalid"}
+        message = {"Network" : "Is invalid"}
         result = {"message" : message, "status" : 400}
+        return result
 
 
 async def add_net(net, active, comment):
@@ -141,17 +146,17 @@ async def add_net(net, active, comment):
         if await check_net(net) is False:
             await Networks.create(network = net, active = active, comment = comment)
             log.info(f'Added new network -> {net}')
-            message = {"network": "Has been added", "check it" : await show_net(net)}
+            message = {"Network": "Has been added", "check it" : await show_net(net)}
             result = {'message': message, 'status': 200}
             return result
         else:
             log.warn(f'Cant add new network -> {net}: Cause network already exist')
-            message = {"network" : "already exist", "check it" : await show_net(net)}
+            message = {"Network" : "Already exist", "check it" : await show_net(net)}
             result = {'message': message, 'status': 412}
             return result
     else:
         result = {'message': message, 'status': 412}
-        message = {"message": "network is invalid"}
+        message = {"Network": "Is invalid"}
         result = {'message': message, 'status': 400}
         return result
 
@@ -161,17 +166,17 @@ async def del_net(net):
         if await check_net(net) is True:
             await Networks.filter(network = net).delete()
             log.info(f'Deleted old network -> {net}')
-            message = {"message": "network deleted"}
+            message = {"Network": "Has Been deleted"}
             result = {'message': message, 'status': 200}
             return result
         else:
             log.warn(f'Cant delete old network -> {net}: Cause network already deleted')
-            message = {"message": "This network already deleted"}
+            message = {"Network": "Is already doesnt exist"}
             result = {'message': message, 'status': 412}
             return result
     else:
         log.warn(f'Cant delete this network -> {net}: Cause network is invalid')
-        message = {"message": "network is invalid"}
+        message = {"Network": "Is invalid"}
         result = {'message': message, 'status': 400}
         return result
 
@@ -183,16 +188,16 @@ async def upd_net(net, active, comment):
             await Networks.filter(network = net).update(active = active, comment = comment)
             new_version = await show_net(net)
             log.info(f'{old_version} modify to {new_version}')
-            message = {"Network" : "has been updated", "check it": new_version}
+            message = {"Network" : "Has been updated", "check it": new_version}
             result = {'message': message, 'status': 200}
             return result
         else:
             log.warn(f'Cant modify this network -> {net}: Cause network is doesnt exist')
-            message = {"message": "network is valid, but doesnt exist"}
+            message = {"Network": "Is valid, but doesnt exist"}
             result = {'message': message, 'status': 404}
             return result
     else:
         log.warn(f'Cant modify this network -> {net}: Cause network is invalid')
-        message = {"message": "network is invalid"}
+        message = {"Network": "Is invalid"}
         result = {'message': message, 'status': 400}
         return result

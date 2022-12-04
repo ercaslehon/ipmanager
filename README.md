@@ -104,7 +104,7 @@ Also, the method expects a 400 response code with the message that the method re
 
 Endpoint
 ============
-I think I've described everything. 
+I think I've described everything you need to know. I may have missed something, of course, but the essentials are there.
 
 I have a diagram of how the tool works, but it's only in Russian so far, and I'm not sure I'll rewrite it into English: https://miro.com/app/board/uXjVPBZ7BJo=/?share_link_id=939878736574
 

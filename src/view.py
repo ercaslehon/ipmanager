@@ -55,15 +55,17 @@ async def show_ip(ip):
 async def add_ip(ip, used, comment):
     if valid_ip(ip) is True:
         if await check_ip(ip) is False:
-            await IpAddresses.create(ip = ip, used = used, comment = comment)
-            added_ip = await show_ip(ip)
+            if used == str('True'):
+                answer = bool(True)
+            else:
+                answer = bool(False) 
+            await IpAddresses.create(ip = ip, used = answer, comment = comment)
             message = {"IP-Address" : "Has been added", "Check It" : f"With /ip/show?ip={ip}"}
             log.info(f'Added new IP -> {ip}')
             result = {'message' : str(message), 'status' : 200}
             return result
         else:
             log.warn(f'Cant add new IP -> {ip} : Cause IP already exist')
-            existed_ip = await show_ip(ip)
             message = {"IP-Address" : "Already exist", "Check it" : f"With /ip/show?ip={ip}"}
             result = {"message" : message, "status" : 412}
             return result
@@ -93,12 +95,15 @@ async def del_ip(ip):
         result = {'message': message, 'status': 400}
         return result
 
-async def upd_ip(ip, used, comment):
+async def mod_ip(ip, used, comment):
     if valid_ip(ip) is True:
         if await check_ip(ip) is True:
             old_version = await show_ip(ip)
-            print(used, comment)
-            await IpAddresses.filter(ip = ip).update(comment = comment, used = used)
+            if used == str('True'):
+                answer = bool(True)
+            else:
+                answer = bool(False)
+            await IpAddresses.filter(ip = ip).update(used = answer, comment = comment)
             new_version = await show_ip(ip)
             log.info(f'{old_version} modify to {new_version}')
             message = {"IP-Address" : "Has been updated", "Check It" : f"With /ip/show?ip={ip}"}
@@ -116,9 +121,7 @@ async def upd_ip(ip, used, comment):
         return result
 
 
-
 #NETWORKS
-
 
 
 async def search_net():
@@ -144,14 +147,18 @@ async def show_net(net):
 async def add_net(net, active, comment):
     if valid_net(net) is True:
         if await check_net(net) is False:
-            await Networks.create(network = net, active = active, comment = comment)
+            if active == str('True'):
+                answer = bool(True)
+            else:
+                answer = bool(False)
+            await Networks.create(network = net, active = answer, comment = comment)
             log.info(f'Added new network -> {net}')
-            message = {"Network": "Has been added", "check it" : await show_net(net)}
+            message = {"Network": "Has been added", "Check it" : f"With /net/show?net={net}"}
             result = {'message': message, 'status': 200}
             return result
         else:
             log.warn(f'Cant add new network -> {net}: Cause network already exist')
-            message = {"Network" : "Already exist", "check it" : await show_net(net)}
+            message = {"Network" : "Already exist", "Check it" : "With /net/show?net={net}"}
             result = {'message': message, 'status': 412}
             return result
     else:
@@ -181,14 +188,18 @@ async def del_net(net):
         return result
 
 
-async def upd_net(net, active, comment):
+async def mod_net(net, active, comment):
     if valid_net(net) is True:
         if await check_net(net) is True:
+            if active == str('True'):
+                answer = bool(True)
+            else:
+                answer = bool(False)
             old_version = await show_net(net)
-            await Networks.filter(network = net).update(active = active, comment = comment)
+            await Networks.filter(network = net).update(active = answer, comment = comment)
             new_version = await show_net(net)
             log.info(f'{old_version} modify to {new_version}')
-            message = {"Network" : "Has been updated", "check it": new_version}
+            message = {"Network" : "Has been updated", "check it": new_version['message']}
             result = {'message': message, 'status': 200}
             return result
         else:

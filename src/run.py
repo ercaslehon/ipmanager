@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from database.connectToDatabase import connectToDatabase
 from tortoise.contrib.fastapi import HTTPNotFoundError, register_tortoise
 from fastapi.responses import JSONResponse
-from view import search_ip, show_ip, add_ip, del_ip, upd_ip, search_net, show_net, add_net, del_net, upd_net
+from view import search_ip, show_ip, add_ip, del_ip, mod_ip, search_net, show_net, add_net, del_net, mod_net
 #from app.models import IpAddresses, Networks
 
 #Functionality Part
@@ -39,9 +39,9 @@ async def ip_del(ip):
     result = await del_ip(ip)
     raise HTTPException( status_code = result['status'], detail = result['message'])
 
-@app.get("/ip/upd")
-async def ip_upd(ip, used, comment):
-    result = await upd_ip(ip, used, comment)
+@app.get("/ip/mod")
+async def ip_mod(ip, used, comment):
+    result = await mod_ip(ip, used, comment)
     raise HTTPException( status_code = result['status'], detail = result['message'])
 
 
@@ -67,9 +67,9 @@ async def net_del(net):
     result = await del_net(net)
     raise HTTPException( status_code = result['status'], detail = result['message'])
 
-@app.get("/net/upd")
-async def net_upd(net, active, comment):
-    result = await upd_net(net, active, comment)
+@app.get("/net/mod")
+async def net_mod(net, active, comment):
+    result = await mod_net(net, active, comment)
     raise HTTPException( status_code = result['status'], detail = result['message'])
 
 
